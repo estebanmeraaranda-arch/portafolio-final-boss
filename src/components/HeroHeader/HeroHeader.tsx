@@ -15,41 +15,41 @@ export interface HeroHeaderProps {
 }
 
 export default function HeroHeader({
-  modelUrl = '/models/avatar.fbx',
+  modelUrl = '/models/Zorrito.glb',
   onViewProjects,
 }: HeroHeaderProps) {
-  // Rombos flotantes 3D ("AI", "3D", "UX", "</>") posicionados alrededor del robot en el lado derecho
+  // Rombos flotantes 3D desplazados hacia la derecha alrededor del Zorrito
   const floatingDiamonds: Array<{
     label: string;
     position: [number, number, number];
     hoverEmissiveColor: '#43cbb4' | '#a73ad9';
     phaseOffset: number;
   }> = [
-    {
-      label: 'AI',
-      position: [0.18, 1.05, 0.25],
-      hoverEmissiveColor: '#a73ad9',
-      phaseOffset: 0,
-    },
-    {
-      label: '3D',
-      position: [2.25, 0.82, 0.15],
-      hoverEmissiveColor: '#43cbb4',
-      phaseOffset: 1.6,
-    },
-    {
-      label: 'UX',
-      position: [0.32, -0.55, 0.35],
-      hoverEmissiveColor: '#43cbb4',
-      phaseOffset: 3.2,
-    },
-    {
-      label: '</>',
-      position: [2.15, -0.52, 0.35],
-      hoverEmissiveColor: '#a73ad9',
-      phaseOffset: 4.8,
-    },
-  ];
+      {
+        label: 'ILUSTRACIÓN',
+        position: [0.45, 1.02, 0.25],
+        hoverEmissiveColor: '#a73ad9',
+        phaseOffset: 0,
+      },
+      {
+        label: 'ANIMACIÓN',
+        position: [2.42, 0.82, 0.15],
+        hoverEmissiveColor: '#43cbb4',
+        phaseOffset: 1.6,
+      },
+      {
+        label: 'UNITY',
+        position: [0.55, -0.55, 0.35],
+        hoverEmissiveColor: '#43cbb4',
+        phaseOffset: 3.2,
+      },
+      {
+        label: 'CÓDIGO',
+        position: [2.32, -0.52, 0.35],
+        hoverEmissiveColor: '#a73ad9',
+        phaseOffset: 4.8,
+      },
+    ];
 
   const handleViewProjects = () => {
     if (onViewProjects) {
@@ -64,10 +64,10 @@ export default function HeroHeader({
 
   return (
     <section className="relative w-screen h-screen overflow-hidden bg-[#09090f]">
-      {/* Resplandor ambiental suave detrás del avatar (derecha) como en la Imagen 1 */}
+      {/* Resplandor ambiental suave detrás del avatar (derecha) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_72%_48%,rgba(167,58,217,0.14)_0%,rgba(67,203,180,0.08)_28%,transparent_62%)]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_76%_48%,rgba(167,58,217,0.14)_0%,rgba(67,203,180,0.08)_28%,transparent_62%)]"
       />
 
       {/* Cuadrícula técnica ultra sutil */}
@@ -84,11 +84,11 @@ export default function HeroHeader({
           camera={{ position: [0, 0.15, 4.8], fov: 38 }}
           gl={{ antialias: true, alpha: true }}
         >
-          {/* Controles sin zoom y con ángulos restringidos (Rúbrica) */}
+          {/* Controles sin zoom y con ángulos restringidos */}
           <OrbitControls
             enableZoom={false}
             enablePan={false}
-            target={[0.55, 0.05, 0]}
+            target={[0, 0.05, 0]}
             minPolarAngle={Math.PI / 2 - 0.25}
             maxPolarAngle={Math.PI / 2 + 0.2}
             minAzimuthAngle={-0.38}
@@ -96,36 +96,32 @@ export default function HeroHeader({
             rotateSpeed={0.6}
           />
 
-          {/* Iluminación de la rúbrica: ambientLight baja + luces #43cbb4 y #a73ad9 */}
-          <ambientLight intensity={0.28} />
-          <directionalLight
-            position={[-2.5, 3.5, 3.5]}
-            intensity={2.4}
-            color="#43cbb4"
-            castShadow
+          {/* Iluminación de estudio suave (estilo Viewport de Blender) + acentos sutiles Cyber-OS */}
+          <ambientLight intensity={1.1} />
+          <hemisphereLight
+            args={['#ffffff', '#8a94a6', 1.2]}
+            position={[0, 5, 0]}
           />
           <directionalLight
-            position={[4.5, 2.5, -2.0]}
-            intensity={2.8}
-            color="#a73ad9"
-          />
-          <pointLight
-            position={[0.4, 0.6, 2.2]}
+            position={[1.8, 2.5, 4.5]}
             intensity={1.6}
-            color="#43cbb4"
-            distance={6}
+            color="#ffffff"
           />
-          <pointLight
-            position={[2.4, 0.5, 1.8]}
-            intensity={1.6}
-            color="#a73ad9"
-            distance={6}
+          <directionalLight
+            position={[-2.5, 1.5, 3.0]}
+            intensity={0.75}
+            color="#e2f8f5"
+          />
+          <directionalLight
+            position={[3.5, 2.0, -2.5]}
+            intensity={0.85}
+            color="#c084fc"
           />
 
-          {/* Modelo FBX animado + Robot 3D de la Imagen 1 */}
-          <FBXModelErrorBoundary fallback={<AvatarPlaceholderFallback />}>
-            <Suspense fallback={<AvatarPlaceholderFallback />}>
-              <AnimatedAvatar url={modelUrl} position={[1.25, -0.22, 0]} />
+          {/* Modelo 3D Zorrito.glb animado desplazado a la derecha */}
+          <FBXModelErrorBoundary fallback={<AvatarPlaceholderFallback position={[1.45, -0.22, 0]} />}>
+            <Suspense fallback={<AvatarPlaceholderFallback position={[1.45, -0.22, 0]} />}>
+              <AnimatedAvatar url={modelUrl} position={[1.45, -0.22, 0]} scale={1.18} />
             </Suspense>
           </FBXModelErrorBoundary>
 

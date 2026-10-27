@@ -94,11 +94,12 @@ export default function FloatingDiamond({
         />
       </mesh>
 
-      {/* Etiqueta técnica ("AI", "3D", "UX", "</>") */}
+      {/* Etiqueta técnica ("ARTE 2D", "ANIMACIÓN", "UNITY", "BRANDING") */}
       <Billboard follow={true}>
         <Text
           position={[0, -0.24, 0]}
-          fontSize={0.075}
+          fontSize={0.062}
+          letterSpacing={0.06}
           fontWeight="bold"
           color={hovered ? '#ffffff' : hoverEmissiveColor}
           anchorX="center"
